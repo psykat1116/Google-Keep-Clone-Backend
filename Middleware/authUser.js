@@ -1,5 +1,4 @@
 const jwt = require("jsonwebtoken");
-const JWT_SECRET = "googlekeep";
 
 let authUser = (req, res, next) => {
     const token = req.header('auth-token');
@@ -7,7 +6,7 @@ let authUser = (req, res, next) => {
         return res.status(401).send({ error: "Please Authenticate Using Valid Token" });
     }
     try {
-        const data = jwt.verify(token, JWT_SECRET);
+        const data = jwt.verify(token, process.env.SECRET_KEY);
         req.user = data.userData;
         next();
     } catch (error) {
